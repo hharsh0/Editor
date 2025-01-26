@@ -4,18 +4,8 @@ import React, { useState } from "react";
 import { Button } from "../tailwind/ui/button";
 import { FiEdit, FiTrash2, FiPlus, FiImage, FiSmile } from "react-icons/fi";
 import EmojiPicker from "emoji-picker-react";
+import type { Document } from "@/types";
 
-type Document = {
-  id: string;
-  name: string;
-  content: any;
-  saveStatus: string;
-  wordsCount: number;
-  htmlContent: string;
-  markdown: string;
-  isRenaming?: boolean;
-  icon?: string;
-};
 
 interface FileManagerProps {
   documents: Document[];

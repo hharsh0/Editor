@@ -24,19 +24,7 @@ import { uploadFn } from "./image-upload";
 import { TextButtons } from "./selectors/text-buttons";
 import { slashCommand, suggestionItems } from "./slash-command";
 import { useEffect, useRef, useState } from "react";
-// import { Document } from "@/types";
-
-type Document = {
-  id: string;
-  name: string;
-  content: any;
-  saveStatus: string;
-  wordsCount: number;
-  htmlContent: string;
-  markdown: string;
-  isRenaming?: boolean;
-  icon?: string;
-};
+import type { Document } from "@/types";
 
 
 const hljs = require("highlight.js");

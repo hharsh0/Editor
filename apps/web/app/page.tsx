@@ -10,18 +10,7 @@ import { defaultEditorContent } from "@/lib/content";
 import { BookOpen, GithubIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-type Document = {
-  id: string;
-  name: string;
-  content: any;
-  saveStatus: string;
-  wordsCount: number;
-  htmlContent: string;
-  markdown: string;
-  isRenaming?: boolean;
-  icon?: string;
-};
+import type { Document } from "@/types";
 
 
 export default function Page() {
