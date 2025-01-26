@@ -79,6 +79,28 @@ const TailwindAdvancedEditor = ({ document, onUpdate }: TailwindAdvancedEditorPr
     });
   }, 500);
 
+  const hasHeadingNode = (editor: EditorInstance) => {
+    let hasHeading = false;
+    editor.state.doc.descendants((node) => {
+      if (node.type.name.startsWith('heading')) {
+        hasHeading = true;
+        return false;
+      }
+      return true;
+    });
+    return hasHeading;
+  };
+
+  const ensureHeadingExists = (editor: EditorInstance) => {
+    if (!hasHeadingNode(editor)) {
+      editor.chain().insertContentAt(0, {
+        type: 'heading',
+        attrs: { level: 1 },
+        content: []
+      }).run();
+    }
+  };
+
 
   return (
     <div className="ml-64 flex-1 p-6">
@@ -98,6 +120,7 @@ const TailwindAdvancedEditor = ({ document, onUpdate }: TailwindAdvancedEditorPr
           className="relative min-h-[500px] w-full bg-background sm:mb-[calc(20vh)]"
           onCreate={({ editor }) => {
             editor.commands.focus();
+            ensureHeadingExists(editor);
           }}
           editorProps={{
             handleDOMEvents: {
