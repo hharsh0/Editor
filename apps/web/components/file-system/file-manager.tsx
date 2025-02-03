@@ -88,9 +88,9 @@ function FileManager({
           {documents.map((doc) => (
             <div
               key={doc.id}
-              className={`group flex items-center text-sm px-2 py-2 rounded-lg cursor-pointer ${
+              className={`group flex items-center hover:bg-[#2c2c2c] text-sm px-2 py-2 rounded-lg cursor-pointer my-1 ${
                 activeDocumentId === doc.id 
-                  ? "bg-[#383838] text-white" 
+                  ? "bg-[#2c2c2c] text-white" 
                   : "hover:bg-[#383838] text-[#9b9b9b]"
               }`}
             >
