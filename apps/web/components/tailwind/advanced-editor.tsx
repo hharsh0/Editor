@@ -89,6 +89,20 @@ const TailwindAdvancedEditor = ({ document, onUpdate }: TailwindAdvancedEditorPr
     }
   };
 
+  const updateTitleFromHeading = (editor: EditorInstance) => {
+    let newTitle = "Untitled";
+
+    editor.state.doc.descendants((node) => {
+      if (node.type.name.startsWith("heading") && node.textContent.trim()) {
+        newTitle = node.textContent.trim();
+        return false;
+      }
+      return true;
+    });
+
+    onUpdate(document.id, { title: newTitle });
+  };
+
 
   return (
     <div className="ml-64 flex-1 p-6">
@@ -123,6 +137,7 @@ const TailwindAdvancedEditor = ({ document, onUpdate }: TailwindAdvancedEditorPr
           onUpdate={({ editor }) => {
             onUpdate(document.id, { saveStatus: "Unsaved" });
             debouncedUpdates(editor);
+            updateTitleFromHeading(editor);
           }}
           slotAfter={<ImageResizer />}
         >

@@ -1,5 +1,6 @@
 export type Document = {
     id: string;
+    title: string;
     name: string;
     content: any;
     saveStatus: string;

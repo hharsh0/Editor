@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { Button } from "../tailwind/ui/button";
 import { FiEdit, FiTrash2, FiPlus, FiImage, FiSmile } from "react-icons/fi";
+import { File, FileText } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
 import type { Document } from "@/types";
-
 
 interface FileManagerProps {
   documents: Document[];
@@ -26,7 +26,7 @@ function FileManager({
   onDocumentDelete,
   onDocumentRename,
   onStartRename,
-  onIconChange
+  onIconChange,
 }: FileManagerProps) {
   const [showPickerForDoc, setShowPickerForDoc] = useState<string | null>(null);
   const [fileInputKey, setFileInputKey] = useState(Date.now());
@@ -108,18 +108,20 @@ function FileManager({
                       <span className="text-lg">{doc.icon}</span>
                     )
                   ) : (
-                    <span className="text-lg">📄</span> // Default icon
+                    //default icon
+                    // <span className="text-lg">📄</span>
+                    <span><FileText className="w-4 h-4" /></span>
                   )}
                 </div>
                 
                 {/* Icon Change Buttons */}
-                <div className="absolute -right-2 -top-2 opacity-0 group-hover/icon:opacity-100 flex gap-1">
-                  {/* <button
+                {/* <div className="absolute -right-2 -top-2 opacity-0 group-hover/icon:opacity-100 flex gap-1">
+                  <button
                     onClick={() => setShowPickerForDoc(doc.id)}
                     className="p-1 rounded-full bg-[#505050] hover:bg-[#606060]"
                   >
                     <FiSmile className="w-3 h-3" />
-                  </button> */}
+                  </button>
                   <label className="p-1 rounded-full bg-[#505050] hover:bg-[#606060] cursor-pointer">
                     <FiImage className="w-3 h-3" />
                     <input
@@ -130,7 +132,7 @@ function FileManager({
                       onChange={(e) => handleImageUpload(e, doc.id)}
                     />
                   </label>
-                </div>
+                </div> */}
               </div>
 
               {/* Document Name */}
@@ -152,6 +154,7 @@ function FileManager({
                   <div 
                     className="flex-1"
                     onClick={() => onDocumentSelect(doc.id)}
+                    onDoubleClick={()=>onStartRename(doc.id)}
                   >
                     {doc.name} {doc.saveStatus === "Unsaved" && "*"}
                   </div>

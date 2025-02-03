@@ -36,14 +36,15 @@ export default function Page() {
   const createNewDocument = () => {
     const newDoc = {
       id: Date.now().toString(),
-      name: `Untitled ${documents.length + 1}`,
+      title: "Untitled",
+      name: `Untitled${documents.length + 1}`,
       // content: { type: "doc", content: [] },
       content: {defaultEditorContent},
       htmlContent: "",
       markdown: "",
       saveStatus: "Unsaved",
       wordsCount: 0,
-      icon: "📄" 
+      icon: "" 
     };
     
     setDocuments(prev => [...prev, newDoc]);
@@ -97,11 +98,12 @@ export default function Page() {
     );
   };
 
+  const activeDocument = documents.find((doc) => doc?.id === activeDocumentId);
 
   return (
-    <div className="flex min-h-screen">
-      {/* <FileManager  />
-      <TailwindAdvancedEditor /> */}
+    <>
+    <title>{activeDocument?.title}</title>
+      <div className="flex min-h-screen">
        <FileManager 
         documents={documents}
         activeDocumentId={activeDocumentId}
@@ -125,5 +127,6 @@ export default function Page() {
         </div>
       )}
     </div>
+    </>
   );
 }
