@@ -6,12 +6,10 @@ import { Button } from "@/components/tailwind/ui/button";
 import { defaultEditorContent } from "@/lib/content";
 import { useEffect, useState } from "react";
 import type { Document } from "@/types";
-import useIsMobile from "@/hooks/useIsMobile";
 
 export default function Page() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [activeDocumentId, setActiveDocumentId] = useState<string | null>(null);
-  const isMobile = useIsMobile();
 
   // Load documents from localStorage on mount
   useEffect(() => {
