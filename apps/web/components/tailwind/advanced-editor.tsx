@@ -25,6 +25,8 @@ import { TextButtons } from "./selectors/text-buttons";
 import { slashCommand, suggestionItems } from "./slash-command";
 import { useEffect, useRef, useState } from "react";
 import type { Document } from "@/types";
+import { Button } from "./ui/button";
+import { MenuIcon, XIcon } from "lucide-react";
 
 
 const hljs = require("highlight.js");
@@ -41,6 +43,7 @@ const TailwindAdvancedEditor = ({ document, onUpdate }: TailwindAdvancedEditorPr
   const [openColor, setOpenColor] = useState(false);
   const [openLink, setOpenLink] = useState(false);
   const [openAI, setOpenAI] = useState(false);
+  const [isFileManagerOpen, setIsFileManagerOpen] = useState(false);
 
   const highlightCodeblocks = (content: string) => {
     const doc = new DOMParser().parseFromString(content, "text/html");
@@ -105,7 +108,20 @@ const TailwindAdvancedEditor = ({ document, onUpdate }: TailwindAdvancedEditorPr
 
 
   return (
-    <div className="ml-64 flex-1 p-6">
+    <div className="md:ml-64 flex-1 p-6">
+      {/* Navigation Bar (Always Visible) */}
+      {/* <nav className="md:ml-64 fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
+          <div className="flex justify-between items-center p-4">
+            <Button
+              variant="ghost"
+              className="lg:hidden"
+              onClick={() => setIsFileManagerOpen(!isFileManagerOpen)}
+            >
+              {isFileManagerOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+            </Button>
+            <h1 className="text-lg font-semibold">My App</h1>
+          </div>
+        </nav> */}
       <div className="flex absolute right-10 top-10 z-10 mb-5 gap-2">
         <div className="rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
           {document.saveStatus}

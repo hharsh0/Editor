@@ -3,20 +3,15 @@
 import FileManager from "@/components/file-system/file-manager";
 import TailwindAdvancedEditor from "@/components/tailwind/advanced-editor";
 import { Button } from "@/components/tailwind/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/tailwind/ui/dialog";
-import Menu from "@/components/tailwind/ui/menu";
-import { ScrollArea } from "@/components/tailwind/ui/scroll-area";
 import { defaultEditorContent } from "@/lib/content";
-import { BookOpen, GithubIcon } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Document } from "@/types";
-
+import useIsMobile from "@/hooks/useIsMobile";
 
 export default function Page() {
-
   const [documents, setDocuments] = useState<Document[]>([]);
   const [activeDocumentId, setActiveDocumentId] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   // Load documents from localStorage on mount
   useEffect(() => {
@@ -39,29 +34,27 @@ export default function Page() {
       title: "Untitled",
       name: `Untitled${documents.length + 1}`,
       // content: { type: "doc", content: [] },
-      content: {defaultEditorContent},
+      content: { defaultEditorContent },
       htmlContent: "",
       markdown: "",
       saveStatus: "Unsaved",
       wordsCount: 0,
-      icon: "" 
+      icon: "",
     };
-    
-    setDocuments(prev => [...prev, newDoc]);
+
+    setDocuments((prev) => [...prev, newDoc]);
     setActiveDocumentId(newDoc.id);
   };
 
   const updateDocument = (id: string, updates: Partial<Document>) => {
-    setDocuments(prev => 
-      prev.map(doc => 
-        doc.id === id ? { ...doc, ...updates } : doc
-      )
+    setDocuments((prev) =>
+      prev.map((doc) => (doc.id === id ? { ...doc, ...updates } : doc)),
     );
   };
 
   const handleDeleteDocument = (id: string) => {
-    setDocuments(prev => {
-      const newDocs = prev.filter(doc => doc.id !== id);
+    setDocuments((prev) => {
+      const newDocs = prev.filter((doc) => doc.id !== id);
       // If we deleted the active document, clear the active ID
       if (activeDocumentId === id) {
         setActiveDocumentId(newDocs.length > 0 ? newDocs[0].id : null);
@@ -71,30 +64,26 @@ export default function Page() {
   };
 
   const handleRenameDocument = (id: string, newName: string) => {
-    setDocuments(prev => 
-      prev.map(doc => 
-        doc.id === id 
-          ? { ...doc, name: newName, isRenaming: false } 
-          : doc
-      )
+    setDocuments((prev) =>
+      prev.map((doc) =>
+        doc.id === id ? { ...doc, name: newName, isRenaming: false } : doc,
+      ),
     );
   };
 
   const startRenaming = (id: string) => {
-    setDocuments(prev => 
-      prev.map(doc => 
-        doc.id === id 
-          ? { ...doc, isRenaming: true } 
-          : { ...doc, isRenaming: false }
-      )
+    setDocuments((prev) =>
+      prev.map((doc) =>
+        doc.id === id
+          ? { ...doc, isRenaming: true }
+          : { ...doc, isRenaming: false },
+      ),
     );
   };
 
   const handleIconChange = (id: string, icon: string) => {
-    setDocuments(prev => 
-      prev.map(doc => 
-        doc.id === id ? { ...doc, icon } : doc
-      )
+    setDocuments((prev) =>
+      prev.map((doc) => (doc.id === id ? { ...doc, icon } : doc)),
     );
   };
 
@@ -102,31 +91,33 @@ export default function Page() {
 
   return (
     <>
-    <title>{activeDocument?.title}</title>
+      <title>{activeDocument?.title}</title>
       <div className="flex min-h-screen">
-       <FileManager 
-        documents={documents}
-        activeDocumentId={activeDocumentId}
-        onDocumentSelect={setActiveDocumentId}
-        onCreateNew={createNewDocument}
-        onDocumentDelete={handleDeleteDocument}
-        onDocumentRename={handleRenameDocument}
-        onStartRename={startRenaming}  
-        onIconChange={handleIconChange}
-      />
-      
-      {activeDocumentId ? (
-        <TailwindAdvancedEditor 
-          key={activeDocumentId}
-          document={documents.find(d => d.id === activeDocumentId)!}
-          onUpdate={updateDocument}
-        />
-      ) : (
-        <div className="ml-64 flex-1 p-6 flex items-center justify-center">
-          <Button onClick={createNewDocument}>Create New Document</Button>
-        </div>
-      )}
-    </div>
+        {/* {!isMobile && ( */}
+          <FileManager
+            documents={documents}
+            activeDocumentId={activeDocumentId}
+            onDocumentSelect={setActiveDocumentId}
+            onCreateNew={createNewDocument}
+            onDocumentDelete={handleDeleteDocument}
+            onDocumentRename={handleRenameDocument}
+            onStartRename={startRenaming}
+            onIconChange={handleIconChange}
+          />
+        {/* )} */}
+
+        {activeDocumentId ? (
+          <TailwindAdvancedEditor
+            key={activeDocumentId}
+            document={documents.find((d) => d.id === activeDocumentId)!}
+            onUpdate={updateDocument}
+          />
+        ) : (
+          <div className="ml-64 flex-1 p-6 flex items-center justify-center">
+            <Button onClick={createNewDocument}>Create New Document</Button>
+          </div>
+        )}
+      </div>
     </>
   );
 }

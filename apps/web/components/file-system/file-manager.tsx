@@ -58,7 +58,7 @@ function FileManager({
 
   return (
     <div>
-      <div className="fixed top-0 left-0 h-screen w-64 bg-[#202020] text-white p-4 thin-border-right">
+      <div className="hidden md:block fixed top-0 left-0 h-screen w-64 bg-[#202020] text-white p-4 thin-border-right">
         {/* Emoji Picker */}
         {showPickerForDoc && (
           <div className="absolute left-64 top-0 z-50">
