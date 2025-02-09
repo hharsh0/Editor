@@ -111,7 +111,7 @@ export default function Page() {
             onUpdate={updateDocument}
           />
         ) : (
-          <div className="ml-64 flex-1 p-6 flex items-center justify-center">
+          <div className="md:ml-64 flex-1 p-6 flex items-center justify-center">
             <Button onClick={createNewDocument}>Create New Document</Button>
           </div>
         )}
